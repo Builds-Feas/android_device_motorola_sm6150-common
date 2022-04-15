@@ -226,6 +226,9 @@ else
 TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/rootdir/etc/fstab.qcom
 endif
 
+# Properties
+TARGET_VENDOR_PROP += $(VENDOR_PATH)/vendor.prop
+
 # RIL
 ENABLE_VENDOR_RIL_SERVICE := true
 
