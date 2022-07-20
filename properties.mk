@@ -105,6 +105,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     vendor.bluetooth.soc=cherokee
 
+PRODUCT_PRODUCT_PROPERTIES += \
+    bluetooth.hardware.power.idle_cur_ma=0.01 \
+    bluetooth.hardware.power.operating_voltage_mv=3300 \
+    bluetooth.hardware.power.rx_cur_ma=9 \
+    bluetooth.hardware.power.tx_cur_ma=7 \
+
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.camera.expose.aux=1
