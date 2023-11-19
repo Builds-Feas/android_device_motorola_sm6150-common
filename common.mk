@@ -319,6 +319,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
 
+# Nfc
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/nfc/com.nxp.mifare.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/com.nxp.mifare.xml
+
 # NeuralNetworks
 PRODUCT_PACKAGES += \
     android.hardware.neuralnetworks@1.3.vendor \
