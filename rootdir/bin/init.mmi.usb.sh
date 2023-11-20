@@ -414,68 +414,8 @@ case "$bootmode" in
         esac
     ;;
     * )
-        if [ "$buildtype" == "user" ] && [ "$phonelock_type" != "1" ] && [ "$usb_restricted" != "1" ]
-        then
-            echo 1 > /sys/class/android_usb/android0/secure
-            log_info "Disabling enumeration until bootup!"
-        fi
-
-        case "$usb_config" in
-            "mtp,adb" | "mtp" | "adb")
-            ;;
-            *)
-                case "$mot_usb_config" in
-                    "mtp,adb" | "mtp" | "adb")
-                        setprop persist.vendor.usb.config $mot_usb_config
-                    ;;
-                    *)
-                        case "$securehw" in
-                            "1" )
-                                setprop persist.vendor.usb.config mtp
-                            ;;
-                            *)
-                                setprop persist.vendor.usb.config adb
-                            ;;
-                        esac
-                    ;;
-                esac
-            ;;
-        esac
-
-        adb_early="1"
-        if [ "$adb_early" == "1" ]; then
-            echo 0 > /sys/class/android_usb/android0/secure
-            log_info "Enabling enumeration after bootup, count =  $count !"
-            new_persist_usb_config=`getprop persist.vendor.usb.config`
-            if [[ "$new_persist_usb_config" != *adb* ]]; then
-                setprop persist.vendor.usb.config "adb"
-                setprop vendor.usb.config "adb"
-            else
-                setprop vendor.usb.config $new_persist_usb_config
-            fi
-            exit 0
-        fi
-
-        if [ "$buildtype" == "user" ] && [ "$phonelock_type" != "1" ] && [ "$usb_restricted" != "1" ]
-        then
-            count=0
-            bootcomplete=`getprop vendor.boot_completed`
-            log_info "mmi-usb-sh - bootcomplete = $booted"
-            while [ "$bootcomplete" != "1" ]; do
-                log_dbg "Sleeping till bootup!"
-                sleep 1
-                count=$((count+1))
-                if [ $count -gt 90 ]
-                then
-                    log_info "mmi-usb-sh - Timed out waiting for bootup"
-                    break
-                fi
-                bootcomplete=`getprop vendor.boot_completed`
-            done
-            echo 0 > /sys/class/android_usb/android0/secure
-            log_info "Enabling enumeration after bootup, count =  $count !"
-            exit 0
-        fi
+    # Disabling adb and mtp on boot on regular boots
+        setprop persist.vendor.usb.config ""
     ;;
 esac
 
